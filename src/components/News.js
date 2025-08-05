@@ -91,9 +91,9 @@ export default function InsuranceNewsSection({ insurancedata }) {
                     <img
                       src={activeBlog?.featuredImage?.node?.sourceUrl}
                       alt="img"
-                      layout="fill"
-                      objectFit="cover"
-                      className="absolute inset-0 w-full h-full"
+                      // layout="fill"
+                      // objectFit="cover"
+                      className="absolute object-cover inset-0 w-full h-full"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-500 text-sm">

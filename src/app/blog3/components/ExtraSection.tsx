@@ -1,71 +1,71 @@
-'use client'
+"use client";
 
-export default function ExtraSection() {
-  const cards = [
-    {
-      color: "#e8edff",
-      icon: "/icons/business.png",
-      title: "Business Insurance",
-      desc: "Comprehensive coverage for businesses of all sizes and industries.",
-      link: "#",
-      linkColor: "#4c6fff",
-    },
-    {
-      color: "#ffe5e5",
-      icon: "/icons/life.png",
-      title: "Life Insurance",
-      desc: "Secure your family's financial future with life insurance policies.",
-      link: "#",
-      linkColor: "#ff4c4c",
-    },
-    {
-      color: "#f4e6ff",
-      icon: "/icons/home.png",
-      title: "Home Insurance",
-      desc: "Protect your home and belongings with comprehensive property coverage.",
-      link: "#",
-      linkColor: "#a64cff",
-    },
-    {
-      color: "#e6fff2",
-      icon: "/icons/medical.png",
-      title: "Medical Insurance",
-      desc: "Comprehensive health coverage for you and your family's medical needs.",
-      link: "#",
-      linkColor: "#22aa66",
-    },
-    {
-      color: "#ffefd9",
-      icon: "/icons/motorcycle.png",
-      title: "Motorcycle Insurance",
-      desc: "Specialized coverage for motorcycle enthusiasts and daily riders.",
-      link: "#",
-      linkColor: "#ff7b00",
-    },
-  ];
+export default function ExtraSection({ cards }) {
+  // const cards = [
+  //   {
+  //     color: "#e8edff",
+  //     icon: "/icons/business.png",
+  //     title: "Business Insurance",
+  //     desc: "Comprehensive coverage for businesses of all sizes and industries.",
+  //     link: "#",
+  //     linkColor: "#4c6fff",
+  //   },
+  //   {
+  //     color: "#ffe5e5",
+  //     icon: "/icons/life.png",
+  //     title: "Life Insurance",
+  //     desc: "Secure your family's financial future with life insurance policies.",
+  //     link: "#",
+  //     linkColor: "#ff4c4c",
+  //   },
+  //   {
+  //     color: "#f4e6ff",
+  //     icon: "/icons/home.png",
+  //     title: "Home Insurance",
+  //     desc: "Protect your home and belongings with comprehensive property coverage.",
+  //     link: "#",
+  //     linkColor: "#a64cff",
+  //   },
+  //   {
+  //     color: "#e6fff2",
+  //     icon: "/icons/medical.png",
+  //     title: "Medical Insurance",
+  //     desc: "Comprehensive health coverage for you and your family's medical needs.",
+  //     link: "#",
+  //     linkColor: "#22aa66",
+  //   },
+  //   {
+  //     color: "#ffefd9",
+  //     icon: "/icons/motorcycle.png",
+  //     title: "Motorcycle Insurance",
+  //     desc: "Specialized coverage for motorcycle enthusiasts and daily riders.",
+  //     link: "#",
+  //     linkColor: "#ff7b00",
+  //   },
+  // ];
   return (
     <>
-      <section className="insurance-section">
+      <section className="insurance-section ">
         <div className="insurance-header">
           <h2>Know More Insurance Types</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
 
-        <div className="insurance-grid">
-          {cards.map((card, i) => (
+        <div className="insurance-grid ">
+          {cards?.map((card, i: number) => (
             <div
               key={i}
               className="insurance-card"
               style={{ backgroundColor: card.color }}
             >
               <div className="insurance-icon">
-                <img src={card.icon} alt={card.title} />
+                <img src={card?.icon} alt={card?.name} />
               </div>
-              <h3 className="card-title">{card.title}</h3>
-              <p>{card.desc}</p>
+              <h3 className="card-title">{card?.name}</h3>
+              <p>{card?.desc}</p>
               <a href={card.link} style={{ color: card.linkColor }}>
                 Learn More
               </a>
@@ -79,8 +79,8 @@ export default function ExtraSection() {
           <div className="newsletter-left">
             <h2>Subscribe our newsletter</h2>
             <p>
-              Non consectetur a erat nam at. Sit amet risus nullam eget felis eget nunc
-              lobortis.
+              Non consectetur a erat nam at. Sit amet risus nullam eget felis
+              eget nunc lobortis.
             </p>
           </div>
           <div className="newsletter-form">
@@ -393,20 +393,20 @@ export default function ExtraSection() {
           .newsletter-section {
             max-width: 1100px;
           }
-          
+
           .newsletter-left h2 {
             font-size: 2.2rem;
           }
-          
+
           .newsletter-left p {
             font-size: 1rem;
           }
-          
+
           .newsletter-form {
             max-width: 450px;
             height: 55px;
           }
-          
+
           .newsletter-form button {
             width: 65px;
             font-size: 1.2rem;
