@@ -11,6 +11,29 @@ const graphQLClient = new GraphQLClient(
   }
 );
 
+// const GET_HERO_AND_STATS = gql`
+//   query GetAllCategoriesWithPosts {
+//     categories(first: 100) {
+//       nodes {
+//         id
+//         name
+//         slug
+//         posts(first: 10) {
+//           nodes {
+//             id
+//             title
+//             content
+//             featuredImage {
+//               node {
+//                 sourceUrl
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 const GET_HERO_AND_STATS = gql`
   query GetAllCategoriesWithPosts {
     categories(first: 100) {
@@ -30,14 +53,52 @@ const GET_HERO_AND_STATS = gql`
             }
           }
         }
+        children {
+          nodes {
+            id
+            name
+            slug
+            posts(first: 10) {
+              nodes {
+                id
+                title
+                content
+                featuredImage {
+                  node {
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            children {
+              nodes {
+                id
+                name
+                slug
+                posts(first: 10) {
+                  nodes {
+                    id
+                    title
+                    content
+                    featuredImage {
+                      node {
+                        sourceUrl
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 `;
-
 export default function HeroSection() {
   const labels = ["Life Insurance", "Car Insurance", "Education Savings"];
   const [categoryPosts, setCategoryPosts] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const [hero, setHero] = useState(null);
   const [stats, setStats] = useState([]);
@@ -46,6 +107,9 @@ export default function HeroSection() {
   const [cardata, setCardata] = useState({});
   const [lifedata, setlifedata] = useState({});
   const [healthdata, sethealthdata] = useState({});
+  const [cardataposts, setCardataposts] = useState([]);
+  const [lifedataposts, setLifedataposts] = useState([]);
+  const [healthdataposts, setHealthdataposts] = useState([]);
 
   const categoryMappings = {
     "Life Insurance": "health-insurance", // Based on your data structure
@@ -64,13 +128,16 @@ export default function HeroSection() {
         data?.categories?.nodes?.forEach((category) => {
           if (category?.slug === "car-insurance") {
             setCardata(category?.posts.nodes[0]);
+            setCardataposts(category?.posts.nodes);
             console.log(category?.posts.nodes[0], "category?.posts.nodes[0]");
           }
           if (category?.slug === "health-insurance") {
             sethealthdata(category.posts.nodes[0]);
+            setHealthdataposts(category?.posts.nodes);
           }
           if (category?.slug === "life-insurance") {
             setlifedata(category.posts.nodes[0]);
+            setLifedataposts(category?.posts.nodes);
           }
         });
         // setPosts(sortedPosts[0]);
@@ -97,6 +164,8 @@ export default function HeroSection() {
         // setStats(data.statsPosts.nodes);
       } catch (err) {
         console.error("GraphQL Error:", err);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -107,28 +176,28 @@ export default function HeroSection() {
   const [categoryData, setCategoryData] = useState({});
   const categoryNames = Object.keys(categoryData);
   const currentCategory = categoryNames[activeIndex];
-
+  const [statsData, setStatsData] = useState([]);
   function handleAnimationComplete() {
     console.log("Animation finished");
   }
 
-  const statsData = [
-    {
-      imgSrc: "/img1.jpg",
-      title: "1.2 million customers world wide",
-      subtitle: "We're handling",
-    },
-    {
-      imgSrc: "/img2.jpg",
-      title: "Trusted by thousands globally",
-      subtitle: "Customer support 24/7",
-    },
-    {
-      imgSrc: "/img3.jpg",
-      title: "Award winning protection plans",
-      subtitle: "Certified & licensed",
-    },
-  ];
+  // const statsData = [
+  //   {
+  //     imgSrc: "/img1.jpg",
+  //     title: "1.2 million customers world wide",
+  //     subtitle: "We're handling",
+  //   },
+  //   {
+  //     imgSrc: "/img2.jpg",
+  //     title: "Trusted by thousands globally",
+  //     subtitle: "Customer support 24/7",
+  //   },
+  //   {
+  //     imgSrc: "/img3.jpg",
+  //     title: "Award winning protection plans",
+  //     subtitle: "Certified & licensed",
+  //   },
+  // ];
 
   // Auto-switch label every 2 seconds
   useEffect(() => {
@@ -201,7 +270,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right Section - Image with Overlay */}
-        <div className="relative w-full max-w-sm md:max-w-none md:w-[20.6vw] h-[48vh] md:h-[52vh]  mb-10 sm:mb-10 md:mb-0 md:mt-0 min-[1101px]:ml-[13vw] ">
+        <div className="relative  w-full max-w-sm md:max-w-none md:w-[20.6vw] h-[48vh] md:h-[52vh]  mb-10 sm:mb-10 md:mb-0 md:mt-0 min-[1101px]:ml-[13vw] ">
           <div className="relative w-full h-full overflow-hidden rounded-3xl shadow-lg">
             <img
               src={
@@ -230,31 +299,54 @@ export default function HeroSection() {
       </div>
 
       {/* Stats Section */}
-      <div className="relative  z-10 mx-auto flex w-full max-w-6xl flex-col px-4 sm:px-6 lg:px-8 py-10">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col  sm:flex-row sm:flex-wrap gap-6">
-          {statsData.map((stat) => (
-            <div
-              key={stat.title}
-              className="flex flex-col  overflow-hidden rounded-2xl bg-white   w-full sm:w-[48%] md:w-[31%]"
-            >
-              <div className="aspect-video  w-full">
-                <img
-                  src={stat.imgSrc}
-                  alt={stat.title}
-                  className="object-cover w-full h-[29.5vh] opacity-100 rounded-[6.9%]"
-                />
-              </div>
-              <div className="flex flex-grow flex-col justify-between p-5">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {stat.title}
-                </h3>
-                <div className="mt-3 flex items-center text-gray-500">
-                  <ArrowRight className="mr-2 h-4 w-4" />
-                  <span>{stat.subtitle}</span>
+          {isLoading
+            ? Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse flex flex-col overflow-hidden rounded-2xl bg-white w-full sm:w-[48%] md:w-[31%]"
+                >
+                  <div className="aspect-video bg-gray-200 w-full rounded-[6.9%]"></div>
+                  <div className="flex flex-grow flex-col justify-between p-5">
+                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              ))
+            : (activeIndex === 0
+                ? lifedataposts
+                : activeIndex === 1
+                ? cardataposts
+                : healthdataposts
+              )
+                ?.slice(0, 3)
+                ?.map((stat) => (
+                  <div
+                    key={stat?.title}
+                    className="flex flex-col  overflow-hidden rounded-2xl bg-white   w-full sm:w-[48%] md:w-[31%]"
+                  >
+                    <div className="aspect-video  w-full">
+                      <img
+                        src={
+                          stat?.featuredImage?.node?.sourceUrl ||
+                          "/placeholder.png"
+                        }
+                        alt={stat?.title}
+                        className="object-cover w-full h-[29.5vh] opacity-100 rounded-[6.9%]"
+                      />
+                    </div>
+                    <div className="flex flex-grow flex-col justify-between p-5">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {stat?.title}
+                      </h3>
+                      <div className="mt-3 flex items-center text-gray-500">
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        <span>{stat?.subtitle}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
           {/* {statsData.map((stat, index) => (
             <div key={index} className="...">
               <img src={stat.imgSrc} alt={stat.title} />
