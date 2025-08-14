@@ -1,5 +1,10 @@
 "use client";
 import React, { use, useState } from "react";
+import { FaCarCrash, FaNotesMedical } from "react-icons/fa";
+import { LiaMotorcycleSolid } from "react-icons/lia";
+import { LuBriefcaseBusiness } from "react-icons/lu";
+import { HiMiniHomeModern } from "react-icons/hi2";
+import { IoHeartSharp } from "react-icons/io5";
 
 const InsuranceCard = ({
   title,
@@ -8,25 +13,23 @@ const InsuranceCard = ({
   isFeatured,
   shadowBg,
   border,
+  icon,
 }) => {
   return (
     <div
-      className={`relative w-80 min-h-[22rem] border p-4 hover:shadow-md hover:-translate-y-1 transition-all duration-200 ${
-        isFeatured
-          ? "bg-black text-white border-none"
-          : "bg-white border-gray-200"
+      className={`relative w-80 min-h-[22rem] border p-4 hover:shadow-md hover:bg-[#000] group transition-all duration-200 ${
+        isFeatured ? "  border-gray-200" : "  border-gray-200"
       }`}
     >
+      <div className="h-[50px] absolute w-[50px] bg-amber-300 blur-2xl rounded-4xl bottom-0 right-0"></div>
       {/* Rotated Shadow Box with Image */}
       <div
-        className="absolute z-0  flex justify-center items-center"
+        className="absolute z-0  group-hover:bottom-14 group-hover:right-14 rounded-2xl group-hover:rotate-12  bottom-0 right-0 transition  duration-500  flex justify-center items-center"
         style={{
           width: "30%",
           height: "33%",
           transform: "rotate(-11.47deg)",
           transformOrigin: "bottom right",
-          bottom: "0",
-          right: "0",
           opacity: 1,
           border: border,
           boxShadow: "0 0.5rem 1.5rem rgba(0,0,0,0.1)",
@@ -34,11 +37,15 @@ const InsuranceCard = ({
           overflow: "hidden",
         }}
       >
-        <img
+        <div className="w-[100px] h-[100px] flex justify-center items-center">
+          {" "}
+          {icon}
+        </div>
+        {/* <img
           src={imageUrl}
           alt={title}
           className="w-3/4 h-3/4 text-black object-contain"
-        />
+        /> */}
       </div>
 
       {/* Card Content */}
@@ -46,28 +53,31 @@ const InsuranceCard = ({
         <div>
           <h3
             className={`text-lg ${
-              isFeatured ? "text-white" : "text-[#6D6B77]"
+              isFeatured
+                ? "text-[#1a1a1a] group-hover:text-[#fff]"
+                : "text-[#1a1a1a] group-hover:text-[#fff]"
             }`}
           >
             {title}
           </h3>
           <p
             className={`text-sm mt-1  ${
-              isFeatured ? "text-gray-300" : "text-[#6D6B77]"
+              isFeatured
+                ? "text-[#414141] group-hover:text-[#fff]"
+                : "text-[#414141] group-hover:text-[#fff]"
             }`}
           >
             {description}
           </p>
         </div>
-        {isFeatured && (
-          <a
-            href="#"
-            className="text-[#FEB117]
+
+        <a
+          href="#"
+          className="group-hover:text-[#FEB117]
            text-sm font-medium hover:underline"
-          >
-            Learn More →
-          </a>
-        )}
+        >
+          Learn More →
+        </a>
       </div>
     </div>
   );
@@ -84,6 +94,7 @@ export default function InsuranceTypes() {
       isFeatured: true,
       shadowBg: "#E4EFFE",
       border: "none",
+      icon: <FaCarCrash className=" h-[50px] w-[50px]" />,
     },
     {
       id: "motorcycle",
@@ -93,7 +104,8 @@ export default function InsuranceTypes() {
       imageUrl: "bike.png",
       isFeatured: false,
       shadowBg: "#FEF1E0",
-      border: "1.15px solid #FFFFFF",
+      border: "3px solid #FFFFFF",
+      icon: <LiaMotorcycleSolid className=" h-[50px] w-[50px]" />,
     },
     {
       id: "medical",
@@ -102,8 +114,9 @@ export default function InsuranceTypes() {
         "Protect your vehicle with comprehensive auto insurance coverage options.",
       imageUrl: "medical.png",
       isFeatured: false,
-      shadowBg: "#F6EEFE",
-      border: "1.15px solid #FFFFFF",
+      shadowBg: "#E5FCED",
+      border: "3px solid #FFFFFF",
+      icon: <FaNotesMedical className=" h-[50px] w-[50px]" />,
     },
     {
       id: "home",
@@ -113,7 +126,8 @@ export default function InsuranceTypes() {
       imageUrl: "home.png",
       isFeatured: false,
       shadowBg: "#F6EEFE",
-      border: "1.15px solid #FFFFFF",
+      border: "3px solid #FFFFFF",
+      icon: <HiMiniHomeModern className=" h-[50px] w-[50px]" />,
     },
     {
       id: "life",
@@ -122,8 +136,9 @@ export default function InsuranceTypes() {
         "Protect your vehicle with comprehensive auto insurance coverage options.",
       imageUrl: "life.png",
       isFeatured: false,
-      shadowBg: "#FEF1E0",
-      border: "1.15px solid #FFFFFF",
+      shadowBg: "#FDE9E9",
+      border: "3px solid #FFFFFF",
+      icon: <IoHeartSharp className=" h-[50px] w-[50px]" />,
     },
     {
       id: "business",
@@ -133,11 +148,12 @@ export default function InsuranceTypes() {
       imageUrl: "business.png",
       isFeatured: false,
       shadowBg: "#F6EEFE",
-      border: "1.15px solid #FFFFFF",
+      border: "3px solid #FFFFFF",
+      icon: <LuBriefcaseBusiness className=" h-[50px] w-[50px]" />,
     },
   ]);
   return (
-    <div className="bg-gray-50 font-sans">
+    <div className=" font-sans">
       <div className="max-w-6xl mx-auto px-0">
         {/* 👇 Heading and subtext centered with same side spacing as cards */}
         <div className="flex items-start justify-start py-2 gap-38 px-4 mb-6 ml-20">
@@ -184,7 +200,7 @@ export default function InsuranceTypes() {
                 }));
                 setInsuranceData(updatedData);
               }}
-              className="flex justify-center items-start"
+              className="flex justify-center bg-white overflow-hidden items-start"
             >
               <InsuranceCard
                 title={item.title}
@@ -193,6 +209,7 @@ export default function InsuranceTypes() {
                 isFeatured={item.isFeatured}
                 shadowBg={item.shadowBg}
                 border={item.border}
+                icon={item.icon}
               />
             </div>
           ))}

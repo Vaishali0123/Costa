@@ -69,24 +69,26 @@ export default function InsuranceNewsSection({ insurancedata }) {
   }, [insurancedata]);
 
   return (
-    <div className="font-sans">
-      <div className="py-16 sm:py-24 px-4 relative">
+    <div className="font-sans ">
+      <div className="py-8 sm:py-24 px-4 relative">
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-200/40 rounded-full opacity-50 blur-3xl" />
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-[] font-semibold text-center mb-6 text-gray-800">
             Latest Insurance News
           </h2>
-          <div className="bg-white/70 rounded-2xl p-4 sm:p-6 lg:p-8">
-            <div className="flex flex-col  lg:flex-row gap-8 lg:h-[420px]">
+          <div className=" rounded-2xl  flex justify-start  p-4 sm:p-6 lg:p-8">
+            <div className="absolute top-[130px] left-[100px]  w-[clamp(60px,15vw,120px)] h-[clamp(60px,15vw,120px)] bg-[repeating-linear-gradient(45deg,rgba(252,163,17,0.2),rgba(252,163,17,0.2)_2px,transparent_2px,transparent_4px)] rounded-full z-0" />
+
+            <div className="flex flex-col   lg:flex-row gap-8 z-10 lg:h-[520px]">
               {/* Main Content Area */}
               <motion.div
                 key={activeBlog?.id}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4 }}
-                className="flex-1  shadow-[-6px_4px_41.5px_0px_#FFF8E9]"
+                className="flex-1 bg-white p-3 rounded-3xl h-[100%]  shadow-[-6px_4px_41.5px_0px_#FFF8E9]"
               >
-                <div className="relative w-[35.5rem] h-[12.25rem] rounded-xl overflow-hidden mb-6 shadow-md">
+                <div className="relative w-[35.5rem] h-[60%] p-10 rounded-2xl overflow-hidden mb-3 ">
                   {activeBlog?.featuredImage?.node?.sourceUrl ? (
                     <img
                       src={activeBlog?.featuredImage?.node?.sourceUrl}
@@ -123,10 +125,10 @@ export default function InsuranceNewsSection({ insurancedata }) {
                   {insurancedata?.map((blog, index) => (
                     <div
                       key={index}
-                      className={`p-4 rounded-[15px] cursor-pointer transition-all duration-200 ${
+                      className={`p-4  cursor-pointer transition-all duration-200 ${
                         blog?.id === activeBlog?.id
-                          ? "bg-orange-100/70 border border-orange-300"
-                          : "hover:bg-gray-50 border border-gray-200/60"
+                          ? "bg-orange-100/70 border rounded-[15px] scale-95 pl-2 border-orange-300"
+                          : "hover:bg-gray-50 border-b rounded-[4px] border-gray-200/60"
                       }`}
                       onClick={() => setActiveBlog(insurancedata[index])}
                     >
@@ -139,10 +141,10 @@ export default function InsuranceNewsSection({ insurancedata }) {
                       </p>
 
                       {/* ✅ Only show <hr> if NOT selected and NOT last blog */}
-                      {blog?.id !== activeBlog?.id &&
+                      {/* {blog?.id !== activeBlog?.id &&
                         blog?.id !== blogs[blogs.length - 1].id && (
                           <hr className="mt-4 border-gray-200/80" />
-                        )}
+                        )} */}
                     </div>
                   ))}
                 </div>

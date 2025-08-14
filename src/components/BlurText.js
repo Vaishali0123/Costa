@@ -3,14 +3,13 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function BlurText({
-  text = "",
   delay = 0,
   animateBy = "words", // "words" or "letters"
   direction = "top",
-  onAnimationComplete = () => {},
   className = "",
   style = {},
 }) {
+  const text = "We guarantee the future of the things you care about!";
   const items = animateBy === "letters" ? text.split("") : text.split(" ");
 
   const variants = {
@@ -40,7 +39,6 @@ export default function BlurText({
           initial="hidden"
           animate="visible"
           variants={variants}
-          onAnimationComplete={i === items.length - 1 ? onAnimationComplete : undefined}
           className="inline-block"
         >
           {item}

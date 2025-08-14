@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${marcellus.variable}`}>
         <div className="">
-          {/* <Navbar /> */}
+          <Navbar />
           {children}
           <Footer />
         </div>

@@ -9,6 +9,9 @@ import InsuranceTypes from "../components/InsuranceTypes";
 import { GraphQLClient } from "graphql-request";
 import { gql } from "graphql-request";
 import { useEffect, useState } from "react";
+import SpecialtyInsurance from "../components/SpecialtyInsurance";
+import PopularBlogs from "./[insurance]/components/PopularBlogs";
+// import Hero from "../components/text";
 const graphQLClient = new GraphQLClient(
   "https://admin.costaricaninsurance.com/graphql",
   {
@@ -23,7 +26,7 @@ const GET_HERO_AND_STATS = gql`
         id
         name
         slug
-        posts(first: 10) {
+        posts(first: 20) {
           nodes {
             id
             title
@@ -31,6 +34,44 @@ const GET_HERO_AND_STATS = gql`
             featuredImage {
               node {
                 sourceUrl
+              }
+            }
+          }
+        }
+        children(first: 100) {
+          nodes {
+            id
+            name
+            slug
+            posts(first: 20) {
+              nodes {
+                id
+                title
+                content
+                featuredImage {
+                  node {
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            children(first: 100) {
+              nodes {
+                id
+                name
+                slug
+                posts(first: 20) {
+                  nodes {
+                    id
+                    title
+                    content
+                    featuredImage {
+                      node {
+                        sourceUrl
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -48,7 +89,7 @@ export default function Home() {
     async function fetchData() {
       try {
         const data = await graphQLClient.request(GET_HERO_AND_STATS);
-        console.log(data, "data");
+
         // const sortedPosts = [...data.posts.nodes].sort(
         //   (a, b) => new Date(b.date) - new Date(a.date)
         // );
@@ -82,12 +123,15 @@ export default function Home() {
     fetchData();
   }, []);
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 ">
       <HeroSection />
       <Insurance insurancedata={insurancedata} />
-      <Review reviewdata={reviewdata} mortgagesdata={mortgagesdata} />
+      {/* <Review reviewdata={reviewdata} /> */}
+
       <News insurancedata={insurancedata} />
       <InsuranceTypes />
+      <PopularBlogs mortgagesdata={mortgagesdata} />
+      <SpecialtyInsurance />
     </div>
   );
 }
